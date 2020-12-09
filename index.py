@@ -10,7 +10,7 @@ start_time = time.time()
 usr_name = ''
 score = 1
 right_answers_loop_1 = 'count+1', 'count + 1', 'count+ 1', 'count +1' 
-right_answers_loop_2 = '10, 0, -1', '100-1', '10,0,-1' 
+right_answers_loop_2 = '10, 0, -1', '100-1', '10 0 -1', '10 , 0 , -1', '10, 0, -1'   
 
 W, H, FPS = 800, 600, 30
 col_in = (0, 200, 200)
@@ -43,11 +43,12 @@ type_sound = pygame.mixer.Sound(r'assets\type.mp3')
 pygame.mixer.music.set_volume(0.1)
 
 
-def is_clicked_with_sound():
+def is_clicked_with_sound(need_delay=True):
 	clicked = pygame.mouse.get_pressed()
 	if clicked[0] == 1: 
 		click_sound.play()
-		pygame.time.delay(500)
+		if need_delay:
+			pygame.time.delay(500)
 	return clicked
 
 
@@ -60,6 +61,7 @@ def button_txt(x, y, w, h, mes, action=None, f_size=30, x_sh=25, y_sh=25):
 		if clicked[0] == 1:
 			if action is not None:
 				action()
+				quit()
 	else:
 		pygame.draw.rect(app, col_out, (x, y, w, h))
 	
@@ -68,7 +70,7 @@ def button_txt(x, y, w, h, mes, action=None, f_size=30, x_sh=25, y_sh=25):
 
 def button_img(x_c, y_c, w_btn, h_btn, img, img_b, action=None):
 	mouse = pygame.mouse.get_pos()
-	clicked = is_clicked_with_sound()
+	clicked = is_clicked_with_sound(need_delay=False)
 
 	w = 50
 	h = 50
@@ -85,6 +87,7 @@ def button_img(x_c, y_c, w_btn, h_btn, img, img_b, action=None):
 		if clicked[0] == 1:
 			if action is not None:
 				action()
+				quit()
 	else:
 		app.blit(img, (x, y))
 	
@@ -133,6 +136,7 @@ def loop():
 		if is_end:
 			score = 4 - count_ans
 			loop_2()
+			quit()
 		
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -182,12 +186,12 @@ def loop():
 
 		if wrong_ans:
 			if count_ans < 3:
-				print_text("Неверно", 345, 300 + 40 * 5 - 8, font_size=40, font_col=(200, 0, 0))
+				print_text("Неверно!", 330, 480, font_size=40, font_col=(200, 0, 0))
 				pygame.display.update()
 				pygame.time.delay(1000)
 				answer_loop_1 = ''
 			else:
-				print_text("Попытки закончились (", 345, 300 + 40 * 5 - 8, font_size=40, font_col=(200, 0, 0))
+				print_text("Попытки закончились (", 260, 480, font_size=40, font_col=(200, 0, 0))
 				pygame.display.update()
 				pygame.time.delay(1000)
 				is_end = True
@@ -218,6 +222,7 @@ def loop_2():
 		if is_end:
 			score = 4 - count_ans
 			end_app()
+			quit()
 		
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -252,7 +257,8 @@ def loop_2():
 		print_text('for i in range(__, __, __):', x, y + height_line * 0, font_size=30)
 		print_text('print(i)', x + with_tab, y + height_line * 1, font_size=30)
 		print_text("print('Пуск!')", x, y + height_line * 2, font_size=30)
-		button_txt(W // 4  + 130, 510, 170, 50, answer_loop_2, x_sh=10, y_sh=10)
+		button_txt(x + 25, y + height_line * 5.5, 150, 50, answer_loop_2, x_sh=20, y_sh=20)
+
 
 		print_text('До запуска ракеты остается 10 секунд. Но из ', W // 4 - 40, H // 2 - 120, font_size=30)
 		print_text('программы, которая должна была вести отсчет до нуля, ', W // 4 - 40, H // 2 - 90, font_size=30)
@@ -279,12 +285,12 @@ def loop_2():
 		
 		if wrong_ans:
 			if count_ans < 3:
-				print_text("Неверно", 345, 300 + 40 * 5 - 8, font_size=40, font_col=(200, 0, 0))
+				print_text("Неверно!", 330, 480, font_size=40, font_col=(200, 0, 0))
 				pygame.display.update()
 				pygame.time.delay(1000)
 				answer_loop_2 = ''
 			else:
-				print_text("Попытки закончились (", 345, 300 + 40 * 5 - 8, font_size=40, font_col=(200, 0, 0))
+				print_text("Попытки закончились (", 260, 480, font_size=40, font_col=(200, 0, 0))
 				pygame.display.update()
 				pygame.time.delay(1000)
 				is_end = True
@@ -337,18 +343,16 @@ def pause():
 def usr_name_input():
 	global usr_name
 
-	need_input	= True
-	usr_name	= ''
-
+	usr_name = ''
 	while True:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				exit()
-			if need_input and event.type == pygame.KEYDOWN:
+			if event.type == pygame.KEYDOWN:
 				type_sound.play()
 				if event.key == pygame.K_RETURN:
-					need_input = False
-					chose_theme()
+					if usr_name:
+						chose_theme()
 				elif event.key == pygame.K_BACKSPACE:
 					usr_name = usr_name[:-1]
 				else:
@@ -357,8 +361,8 @@ def usr_name_input():
 
 		app.blit(back_img, (0, 0))
 
-		print_text('Please, enter your name (less 10 chars)', W // 4, 200, font_size=30)
-		print_text('Then press enter to start', W // 3, 250, font_size=30)
+		print_text('Пожалуйста, введи ник (меньше 10 символов)', W // 5 + 20, 200, font_size=30)
+		print_text('Затем нажми на  \'enter\'', W // 3 + 15, 250, font_size=30)
 
 		button_txt(320, 300, 150, 70, usr_name, x_sh=20, y_sh=30)
 		button_txt(335, 400, 110, 70, 'Quit', x_sh=30, y_sh=30, action=exit)
@@ -393,8 +397,6 @@ def show_list():
 				exit()
 
 		app.blit(back_img, (0, 0))
-
-		# print_text(f'Топ игроков', 300, 100, font_size=50, font_col=col_out)
 
 		for i in range(len(list_data)):
 			button_txt(W // 7 + W // 25 + 100, H // 3 + i * H // 10 - 50,\
