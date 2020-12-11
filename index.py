@@ -8,8 +8,8 @@ pygame.init()
 start_time = time.time()
 
 usr_name = ''
-score = 1
-right_answers_loop_1 = 'count+1', 'count + 1', 'count+ 1', 'count +1' 
+score = 0
+right_answers_loop_1 = 'count+1', 'count + 1', 'count+ 1', 'count +1' # !!!!!!
 right_answers_loop_2 = '10, 0, -1', '100-1', '10 0 -1', '10 , 0 , -1', '10, 0, -1'   
 
 W, H, FPS = 800, 600, 30
@@ -134,7 +134,7 @@ def loop():
 
 	while True:
 		if is_end:
-			score = 4 - count_ans
+			score += 4 - count_ans
 			loop_2()
 			quit()
 		
@@ -220,7 +220,7 @@ def loop_2():
 
 	while True:
 		if is_end:
-			score = 4 - count_ans
+			score += 4 - count_ans
 			end_app()
 			quit()
 		
@@ -264,9 +264,7 @@ def loop_2():
 		print_text('программы, которая должна была вести отсчет до нуля, ', W // 4 - 40, H // 2 - 90, font_size=30)
 		print_text('потерялась часть условия. Помоги его восстановить. ', W // 4 - 40, H // 2 - 60, font_size=30)
 		
-		
 		app.blit(rocket_1_img, (x_r, y_r))
-		
 
 		if is_anim:
 			y_r -= speed // 10
