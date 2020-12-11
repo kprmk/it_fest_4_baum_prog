@@ -5,12 +5,11 @@ from storage import *
 
 
 pygame.init()
-start_time = time.time()
 
 usr_name = ''
 score = 0
-right_answers_loop_1 = 'count+1', 'count + 1', 'count+ 1', 'count +1' # !!!!!!
-right_answers_loop_2 = '10, 0, -1', '100-1', '10 0 -1', '10 , 0 , -1', '10, 0, -1'   
+right_answers_loop_1 = 'count+1'
+right_answers_loop_2 = '10,0,-1', '100-1'   
 
 W, H, FPS = 800, 600, 30
 col_in = (0, 200, 200)
@@ -38,10 +37,7 @@ s1_m, s2_m, s3_m, s4_m, s5_m = [pygame.image.load(r'assets\star' + str(i) + '_s_
 s1, s2, s3, s4, s5 = [pygame.image.load(r'assets\star' + str(i) + '.png') for i in range(1, 6)] 
 
 
-pygame.mixer.music.load(r'assets\click.mp3')
 pygame.mixer.music.set_volume(0.1)
-pygame.mixer.music.load(r'assets\type.mp3')
-pygame.mixer.music.play()
 
 
 def is_clicked_with_sound(need_delay=True):
@@ -149,7 +145,7 @@ def loop():
 
 				if event.key == pygame.K_RETURN:
 					count_ans += 1
-					if answer_loop_1 in right_answers_loop_1:
+					if ''.join(answer_loop_1.split()) == right_answers_loop_1:
 						is_anim = True
 						is_end = True
 					else:
@@ -237,7 +233,8 @@ def loop_2():
 
 				if event.key == pygame.K_RETURN:
 					count_ans += 1
-					if answer_loop_2 in right_answers_loop_2:
+					if ''.join(answer_loop_2.split()) in right_answers_loop_2 or\
+						''.join(answer_loop_2.split(',')) in right_answers_loop_2:
 						is_anim = True
 					else:
 						wrong_ans = True
