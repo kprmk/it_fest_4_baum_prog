@@ -38,15 +38,17 @@ s1_m, s2_m, s3_m, s4_m, s5_m = [pygame.image.load(r'assets\star' + str(i) + '_s_
 s1, s2, s3, s4, s5 = [pygame.image.load(r'assets\star' + str(i) + '.png') for i in range(1, 6)] 
 
 
-click_sound = pygame.mixer.Sound(r'assets\click.mp3')
-type_sound = pygame.mixer.Sound(r'assets\type.mp3')
+pygame.mixer.music.load(r'assets\click.mp3')
 pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.load(r'assets\type.mp3')
+pygame.mixer.music.play()
 
 
 def is_clicked_with_sound(need_delay=True):
 	clicked = pygame.mouse.get_pressed()
 	if clicked[0] == 1: 
-		click_sound.play()
+		pygame.mixer.music.load(r'assets\click.mp3')
+		pygame.mixer.music.play()
 		if need_delay:
 			pygame.time.delay(500)
 	return clicked
@@ -142,7 +144,9 @@ def loop():
 			if event.type == pygame.QUIT:
 				exit()
 			if event.type == pygame.KEYDOWN:
-				type_sound.play()
+				pygame.mixer.music.load(r'assets\type.mp3')
+				pygame.mixer.music.play()
+
 				if event.key == pygame.K_RETURN:
 					count_ans += 1
 					if answer_loop_1 in right_answers_loop_1:
@@ -228,7 +232,9 @@ def loop_2():
 			if event.type == pygame.QUIT:
 				exit()
 			if event.type == pygame.KEYDOWN:
-				type_sound.play()
+				pygame.mixer.music.load(r'assets\type.mp3')
+				pygame.mixer.music.play()
+
 				if event.key == pygame.K_RETURN:
 					count_ans += 1
 					if answer_loop_2 in right_answers_loop_2:
@@ -347,7 +353,9 @@ def usr_name_input():
 			if event.type == pygame.QUIT:
 				exit()
 			if event.type == pygame.KEYDOWN:
-				type_sound.play()
+				pygame.mixer.music.load(r'assets\type.mp3')
+				pygame.mixer.music.play()
+
 				if event.key == pygame.K_RETURN:
 					if usr_name:
 						chose_theme()
