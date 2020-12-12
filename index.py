@@ -341,6 +341,17 @@ def pause():
 		clock.tick(FPS)
 
 
+def check_name_existance():
+	list_names = [user[0] for user in data.select_all()]
+	if usr_name in list_names:
+		print_text("Такое имя уже занято!", 280, 500, font_size=30, font_col=(200, 0, 0))
+		pygame.display.update()
+		pygame.time.delay(3000)
+		return True
+	else:
+		return False
+		
+
 def usr_name_input():
 	global usr_name
 
@@ -355,7 +366,10 @@ def usr_name_input():
 
 				if event.key == pygame.K_RETURN:
 					if usr_name:
-						chose_theme()
+						if check_name_existance():
+							usr_name = ''
+						else:
+							chose_theme()
 				elif event.key == pygame.K_BACKSPACE:
 					usr_name = usr_name[:-1]
 				else:
@@ -375,11 +389,15 @@ def usr_name_input():
 	
 
 def menu():
+	global score, usr_name
+	
+	score = 0
+	usr_name = ''
+
 	while True:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				exit()
-
 
 		app.blit(back_img, (0, 0))
 
