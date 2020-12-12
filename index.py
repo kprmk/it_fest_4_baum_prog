@@ -16,6 +16,8 @@ col_in = (0, 200, 200)
 col_out = (255, 241, 55)
 
 app = pygame.display.set_mode((W, H))
+pygame.display.set_caption('BAUMAN PYTHONERS')
+pygame.display.set_icon(pygame.image.load(r'assets\logo.png'))
 clock = pygame.time.Clock()
 
 back_img = pygame.image.load(r'assets\menu.png')
@@ -366,7 +368,7 @@ def usr_name_input():
 
 				if event.key == pygame.K_RETURN:
 					if usr_name:
-						if check_name_existance():
+						if check_name_existance() is True:
 							usr_name = ''
 						else:
 							chose_theme()
