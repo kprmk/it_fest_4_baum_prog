@@ -1,10 +1,9 @@
-import sqlite3 # structered query language
-# реляционная база данных (relation)
+import sqlite3
 
 class Storage:
-	def __init__(self): #конструктор, вызывается при создании
-		self.cnct = sqlite3.connect('data.db') # connect
-		self.crs = self.cnct.cursor() # crs - cursor
+	def __init__(self):
+		self.cnct = sqlite3.connect('data.db')
+		self.crs = self.cnct.cursor()
 		self.create_table()
 
 	def create_table(self):
@@ -20,5 +19,5 @@ class Storage:
 		self.crs.execute('''SELECT * FROM score_table ''')
 		return self.crs.fetchall()
 
-	def __del__(self):# деструктор, вызывается при уничтожении
+	def __del__(self):
 		self.cnct.close()
