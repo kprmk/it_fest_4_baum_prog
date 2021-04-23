@@ -1,5 +1,5 @@
 # INGINIRIUM & IT-Fest Py 4
-#### Проект для конкурса IT-Fest Python
+#### Проект для конкурса IT-Fest Python 2020
 #### Кейс 4.«Лёгкий Питон»
 
 ### !How to use!
